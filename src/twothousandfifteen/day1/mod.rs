@@ -40,7 +40,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn part_1_works() {
+    fn part_one_works() {
         let solver = Solver{};
         let cases = vec![
             ("(())", 0), ("()()", 0),
@@ -58,7 +58,7 @@ mod tests {
     }
 
     #[test]
-    fn part_2_works() {
+    fn part_two_works() {
         let solver = Solver{};
         let cases = vec![
             (")", 1), ("()())", 5),

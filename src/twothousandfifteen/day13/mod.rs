@@ -21,22 +21,26 @@ mod tests {
     use super::*;
 
     #[test]
-    fn part_1_works() {
+    fn part_one_works() {
         // let solver = Solver{};
         // let cases = vec![];
 
         // for case in cases {
         //     assert_eq!(solver.part_one_driver(String::from(case.0)), case.1, "input = {}", case.0);
         // }
+
+        // assert_eq!(solver.part_one(), 123);
     }
 
     #[test]
-    fn part_2_works() {
+    fn part_two_works() {
         // let solver = Solver{};
         // let cases = vec![];
 
         // for case in cases {
         //     assert_eq!(solver.part_two_driver(String::from(case.0)), case.1, "input = {}", case.0);
         // }
+
+        // assert_eq!(solver.part_two(), 123);
     }
 }
