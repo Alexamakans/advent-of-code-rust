@@ -1,4 +1,4 @@
-use std::str::FromStr;
+pub mod md5;
 
 pub fn read_input(year: u16, day: u8) -> String {
     if day == 0 || day > 25 {
@@ -12,24 +12,6 @@ pub fn read_input(year: u16, day: u8) -> String {
         day,
     );
     std::fs::read_to_string(path).expect("it exists")
-}
-
-pub fn read_input_as_lines_vec(year: u16, day: u8) -> Vec<String> {
-    read_input(year, day)
-        .lines()
-        .map(ToString::to_string)
-        .collect()
-}
-
-pub fn read_input_as_lines_parsed<T>(year: u16, day: u8) -> Vec<T>
-where
-    T: FromStr,
-    <T as FromStr>::Err: core::fmt::Debug,
-{
-    read_input_as_lines_vec(year, day)
-        .iter()
-        .map(|e| e.parse::<T>().expect("parsed"))
-        .collect::<Vec<T>>()
 }
 
 pub trait DaySolver<T> {
