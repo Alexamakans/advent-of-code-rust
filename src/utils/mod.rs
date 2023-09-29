@@ -1,4 +1,10 @@
+pub mod math;
 pub mod md5;
+pub mod parsing;
+
+pub use math::*;
+pub use md5::*;
+pub use parsing::*;
 
 pub fn read_input(year: u16, day: u8) -> String {
     if day == 0 || day > 25 {
@@ -11,7 +17,10 @@ pub fn read_input(year: u16, day: u8) -> String {
         year,
         day,
     );
-    std::fs::read_to_string(&path).expect(&format!("Expected file '{}' to exist, but it doesn't", path))
+    std::fs::read_to_string(&path).expect(&format!(
+        "Expected file '{}' to exist, but it doesn't",
+        path
+    ))
 }
 
 pub trait DaySolver<T> {
