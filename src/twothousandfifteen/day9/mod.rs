@@ -1,30 +1,14 @@
 use crate::{scanf, twothousandfifteen::YEAR, utils::*};
 use std::{cell::RefCell, rc::Rc};
 
+type LocationType = Rc<RefCell<Location>>;
+type ConnectionType = Rc<RefCell<Connection>>;
+type Locations = Rc<RefCell<Vec<LocationType>>>;
+
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
     fn part_one_driver(&self, input: String) -> i32 {
-        let locations = Rc::new(RefCell::new(Vec::new()));
-        for line in input.lines() {
-            let parsed = scanf!(
-                line,
-                char::is_whitespace,
-                String, // A
-                String, // ->
-                String, // B
-                String, // =
-                u32     // 123
-            );
-            let (a_name, b_name, distance) = (parsed.0, parsed.2, parsed.4);
-            let a = get_location(locations.clone(), &a_name);
-            let b = get_location(locations.clone(), &b_name);
-
-            a.clone()
-                .borrow()
-                .connections
-                .borrow_mut()
-                .push(Rc::new(RefCell::new(Connection::new(a, b, distance))));
-        }
+        let locations = parse_locations(&input);
 
         let mut shortest_distance = u32::MAX;
         for permutation in locations.borrow().clone().into_permutations() {
@@ -35,18 +19,11 @@ impl DaySolver<i32> for Solver {
                     .zip(permutation.iter().skip(1));
                 let mut total_distance = 0;
                 for pair in pairs {
-                    let connection = 'found: {
-                        for c in pair.0.borrow().connections.borrow().iter() {
-                            if c.borrow().to.borrow().name == pair.1.borrow().name {
-                                break 'found c.clone();
-                            }
+                    let connection = {
+                        match pair.0.borrow().get_connection(pair.1.clone()) {
+                            Some(c) => c,
+                            None => break 'invalid_path,
                         }
-                        for c in pair.1.borrow().connections.borrow().iter() {
-                            if c.borrow().to.borrow().name == pair.0.borrow().name {
-                                break 'found c.clone();
-                            }
-                        }
-                        break 'invalid_path;
                     };
 
                     total_distance += connection.borrow().distance;
@@ -62,49 +39,23 @@ impl DaySolver<i32> for Solver {
     }
 
     fn part_two_driver(&self, input: String) -> i32 {
-        let locations = Rc::new(RefCell::new(Vec::new()));
-        for line in input.lines() {
-            let parsed = scanf!(
-                line,
-                char::is_whitespace,
-                String, // A
-                String, // ->
-                String, // B
-                String, // =
-                u32     // 123
-            );
-            let (a_name, b_name, distance) = (parsed.0, parsed.2, parsed.4);
-            let a = get_location(locations.clone(), &a_name);
-            let b = get_location(locations.clone(), &b_name);
-
-            a.clone()
-                .borrow()
-                .connections
-                .borrow_mut()
-                .push(Rc::new(RefCell::new(Connection::new(a, b, distance))));
-        }
+        let locations = parse_locations(&input);
 
         let mut longest_distance = u32::MIN;
         for permutation in locations.borrow().clone().into_permutations() {
             'invalid_path: {
+                // [1, 2, 3, 4, 5] -> [1, 2, 3, 4] zip [2, 3, 4, 5] -> [[1, 2], [2, 3], [3, 4], [4, 5]]
                 let pairs = permutation
                     .iter()
                     .take(permutation.len() - 1)
                     .zip(permutation.iter().skip(1));
                 let mut total_distance = 0;
                 for pair in pairs {
-                    let connection = 'found: {
-                        for c in pair.0.borrow().connections.borrow().iter() {
-                            if c.borrow().to.borrow().name == pair.1.borrow().name {
-                                break 'found c.clone();
-                            }
+                    let connection = {
+                        match pair.0.borrow().get_connection(pair.1.clone()) {
+                            Some(c) => c,
+                            None => break 'invalid_path,
                         }
-                        for c in pair.1.borrow().connections.borrow().iter() {
-                            if c.borrow().to.borrow().name == pair.0.borrow().name {
-                                break 'found c.clone();
-                            }
-                        }
-                        break 'invalid_path;
                     };
 
                     total_distance += connection.borrow().distance;
@@ -126,14 +77,13 @@ impl DaySolver<i32> for Solver {
 
 #[derive(Debug)]
 struct Connection {
-    from: Rc<RefCell<Location>>,
     to: Rc<RefCell<Location>>,
     distance: u32,
 }
 
 impl Connection {
-    fn new(from: Rc<RefCell<Location>>, to: Rc<RefCell<Location>>, distance: u32) -> Self {
-        Connection { from, to, distance }
+    fn new(to: Rc<RefCell<Location>>, distance: u32) -> Self {
+        Connection { to, distance }
     }
 }
 
@@ -149,6 +99,22 @@ impl Location {
             name: name.to_owned(),
             connections: Rc::new(RefCell::new(Vec::new())),
         }
+    }
+
+    fn get_connection(&self, other: LocationType) -> Option<ConnectionType> {
+        for c in self.connections.borrow().iter() {
+            if c.borrow().to.borrow().name == other.borrow().name {
+                return Some(c.clone());
+            }
+        }
+        
+        for c in other.borrow().connections.borrow().iter() {
+            if c.borrow().to.borrow().name == self.name {
+                return Some(c.clone());
+            }
+        }
+
+        None
     }
 }
 
@@ -166,6 +132,31 @@ fn get_location(
         .borrow_mut()
         .push(Rc::new(RefCell::new(Location::new(name))));
     get_location(locations, name)
+}
+
+fn parse_locations(input: &str) -> Locations {
+    let locations = Rc::new(RefCell::new(Vec::new()));
+    for line in input.lines() {
+        let parsed = scanf!(
+            line,
+            char::is_whitespace,
+            String, // A
+            String, // ->
+            String, // B
+            String, // =
+            u32     // 123
+        );
+        let (a_name, b_name, distance) = (parsed.0, parsed.2, parsed.4);
+        let a = get_location(locations.clone(), &a_name);
+        let b = get_location(locations.clone(), &b_name);
+
+        a.clone()
+            .borrow()
+            .connections
+            .borrow_mut()
+            .push(Rc::new(RefCell::new(Connection::new(b, distance))));
+    }
+    locations
 }
 
 #[cfg(test)]
