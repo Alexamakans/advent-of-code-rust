@@ -64,6 +64,7 @@ where
     type Item = Vec<T>;
 
     fn next(&mut self) -> Option<Self::Item> {
+        // https://www.geeksforgeeks.org/iterative-approach-to-print-all-permutations-of-an-array/
         if self.increase == self.indices.len() - 1 {
             println!("end reached");
             return None;
