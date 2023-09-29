@@ -31,7 +31,7 @@ fn encode(s: &str, iterations: u32) -> String {
     let mut result = s.to_owned();
     for _ in 0..iterations {
         let mut iteration_result = String::new();
-        let sequences = extract_sequences(result.chars());
+        let sequences = extract_repeating_sequences(result.chars());
         for sequence in sequences.iter() {
             let length = sequence.0.1 - sequence.0.0;
             iteration_result.push_str(&format!("{}{}", length, sequence.1));

@@ -6,7 +6,20 @@ macro_rules! scanf {
     }}
 }
 
-pub fn extract_sequences<'a, I, T>(it: I) -> Vec<((usize, usize), T)>
+/// Given:
+/// ```
+/// "aaabba".chars()
+/// ```
+///
+/// Returns:
+/// ```
+/// vec![
+///     ((0, 3), 'a'),
+///     ((3, 5), 'b'),
+///     ((5, 6), 'a'),
+/// ]
+/// ```
+pub fn extract_repeating_sequences<'a, I, T>(it: I) -> Vec<((usize, usize), T)>
 where
     I: IntoIterator<Item = T>,
     T: Clone + Eq,
@@ -26,7 +39,7 @@ where
                     // start new sequence
                     start_index = index;
                 }
-            },
+            }
             None => (),
         }
         prev = Some(item);
@@ -38,4 +51,23 @@ where
         None => (),
     }
     result
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn extract_repeating_sequences_works() {
+        let cases = vec![("aaabba", vec![((0, 3), 'a'), ((3, 5), 'b'), ((5, 6), 'a')])];
+
+        for case in cases {
+            assert_eq!(
+                extract_repeating_sequences(case.0.chars()),
+                case.1,
+                "input = {}",
+                case.0
+            );
+        }
+    }
 }
