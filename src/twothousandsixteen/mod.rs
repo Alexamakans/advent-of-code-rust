@@ -1,6 +1,8 @@
 const YEAR: u16 = 2016;
 
 mod day1;
+use std::fmt::Display;
+
 use day1::Solver as DayOne;
 mod day2;
 use day2::Solver as DayTwo;
@@ -82,33 +84,33 @@ pub enum DaySolverEnum {
 }
 
 impl DaySolverEnum {
-    pub fn evaluate(&self, part: u8) -> i32 {
+    pub fn evaluate(&self, part: u8) -> Box<dyn Display> {
         match self {
-            DaySolverEnum::One(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Two(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Three(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Four(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Five(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Six(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Seven(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Eight(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Nine(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Ten(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Eleven(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Twelve(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Thirteen(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Fourteen(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Fifteen(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Sixteen(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Seventeen(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Eighteen(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Nineteen(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::Twenty(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::TwentyOne(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::TwentyTwo(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::TwentyThree(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::TwentyFour(v) => if part == 1 { v.part_one() } else { v.part_two() },
-            DaySolverEnum::TwentyFive(v) => if part == 1 { v.part_one() } else { v.part_two() },
+            DaySolverEnum::One(v) => Box::new(Box::new(if part == 1 { v.part_one() } else { v.part_two() })),
+            DaySolverEnum::Two(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Three(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Four(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Five(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Six(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Seven(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Eight(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Nine(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Ten(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Eleven(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Twelve(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Thirteen(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Fourteen(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Fifteen(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Sixteen(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Seventeen(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Eighteen(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Nineteen(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::Twenty(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::TwentyOne(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::TwentyTwo(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::TwentyThree(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::TwentyFour(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
+            DaySolverEnum::TwentyFive(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
         }
     }
 }
