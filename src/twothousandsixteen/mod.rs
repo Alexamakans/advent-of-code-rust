@@ -113,6 +113,36 @@ impl DaySolverEnum {
             DaySolverEnum::TwentyFive(v) => Box::new(if part == 1 { v.part_one() } else { v.part_two() }),
         }
     }
+
+    pub fn evaluate_input(&self, part: u8, input: &str) -> Box<dyn Display> {
+        match self {
+            DaySolverEnum::One(v) => Box::new(Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) })),
+            DaySolverEnum::Two(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Three(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Four(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Five(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Six(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Seven(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Eight(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Nine(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Ten(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Eleven(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Twelve(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Thirteen(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Fourteen(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Fifteen(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Sixteen(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Seventeen(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Eighteen(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Nineteen(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::Twenty(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::TwentyOne(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::TwentyTwo(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::TwentyThree(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::TwentyFour(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+            DaySolverEnum::TwentyFive(v) => Box::new(if part == 1 { v.part_one_driver(input) } else { v.part_two_driver(input) }),
+        }
+    }
 }
 
 pub fn get_days() -> Vec<DaySolverEnum> {
