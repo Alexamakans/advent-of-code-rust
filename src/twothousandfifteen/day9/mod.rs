@@ -13,10 +13,7 @@ impl DaySolver<i32> for Solver {
         let mut shortest_distance = u32::MAX;
         for permutation in locations.borrow().clone().into_permutations() {
             'invalid_path: {
-                let pairs = permutation
-                    .iter()
-                    .take(permutation.len() - 1)
-                    .zip(permutation.iter().skip(1));
+                let pairs = permutation.into_pairs();
                 let mut total_distance = 0;
                 for pair in pairs {
                     let connection = {
@@ -45,10 +42,7 @@ impl DaySolver<i32> for Solver {
         for permutation in locations.borrow().clone().into_permutations() {
             'invalid_path: {
                 // [1, 2, 3, 4, 5] -> [1, 2, 3, 4] zip [2, 3, 4, 5] -> [[1, 2], [2, 3], [3, 4], [4, 5]]
-                let pairs = permutation
-                    .iter()
-                    .take(permutation.len() - 1)
-                    .zip(permutation.iter().skip(1));
+                let pairs = permutation.into_pairs();
                 let mut total_distance = 0;
                 for pair in pairs {
                     let connection = {

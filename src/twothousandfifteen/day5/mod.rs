@@ -34,6 +34,7 @@ impl DaySolver<i32> for Solver {
             for index in 1..s.chars().count() {
                 let a = s.chars().nth(index-1).unwrap();
                 let b = s.chars().nth(index).unwrap();
+                // Store indices so we can check that they don't overlap
                 pairs.push((index-1, index, (a, b)));
             }
 

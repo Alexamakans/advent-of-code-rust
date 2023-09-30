@@ -1,3 +1,5 @@
+#![feature(impl_trait_in_assoc_type)]
+
 mod utils;
 mod twothousandfifteen;
 mod twothousandsixteen;

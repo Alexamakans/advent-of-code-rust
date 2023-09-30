@@ -30,15 +30,15 @@ fn get_next_password(s: &str) -> String {
         None
     }
 
-    let mut sequence_generator = values.clone().into_sequence_generator();
-    sequence_generator.set_indices(
+    let mut increasing_sequence = values.clone().into_increasing_sequence();
+    increasing_sequence.set_indices(
         s.chars()
             .map(|c| get_index_from_value(&values, &c.to_string()).unwrap())
             .collect::<Vec<usize>>(),
     );
 
     loop {
-        let next = sequence_generator.next().unwrap().join("");
+        let next = increasing_sequence.next().unwrap().join("");
         if is_valid_password(&next) {
             return next;
         }
@@ -68,11 +68,7 @@ fn is_valid_password(s: &str) -> bool {
         false
     };
     let has_at_least_two_distinct_non_overlapping_pairs = 'found: {
-        let pairs = s
-            .chars()
-            .take(s.len() - 1)
-            .zip(s.chars().skip(1))
-            .collect::<Vec<(char, char)>>();
+        let pairs = s.chars().into_pairs().collect::<Vec<(char, char)>>();
         let num_pairs = pairs.len();
         for i in 0..num_pairs {
             let a = pairs.get(i).unwrap();
