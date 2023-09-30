@@ -5,7 +5,7 @@ use super::{super::utils::*, YEAR};
 pub struct Solver {}
 impl DaySolver<u32> for Solver {
     fn part_one_driver(&self, input: &str) -> u32 {
-        get_fastest_reindeer_from_input(input, 2503)
+        get_furthest_distance_traveled_from_input(input, 2503)
     }
 
     fn part_two_driver(&self, input: &str) -> u32 {
@@ -17,7 +17,7 @@ impl DaySolver<u32> for Solver {
     }
 }
 
-fn get_fastest_reindeer_from_input(input: &str, duration_seconds: u32) -> u32 {
+fn get_furthest_distance_traveled_from_input(input: &str, duration_seconds: u32) -> u32 {
     let mut reindeer = input
         .lines()
         .map(|line| ReindeerStats::from(line))
@@ -60,9 +60,7 @@ fn get_highest_points_from_input(input: &str, duration_seconds: u32) -> u32 {
     scores.into_iter().max().unwrap()
 }
 
-#[derive(PartialEq, Eq)]
 struct ReindeerStats {
-    name: String,
     speed_kilometers_per_second: u32,
     stamina_seconds: u32,
     resting_time_seconds: u32,
@@ -101,7 +99,6 @@ impl From<&str> for ReindeerStats {
         );
 
         ReindeerStats {
-            name: parts.0,
             speed_kilometers_per_second: parts.3,
             stamina_seconds: parts.6,
             resting_time_seconds: parts.13,
@@ -126,7 +123,7 @@ Dancer can fly 16 km/s for 11 seconds, but then must rest for 162 seconds.",
 
         for case in cases {
             assert_eq!(
-                get_fastest_reindeer_from_input(case.0, 1000),
+                get_furthest_distance_traveled_from_input(case.0, 1000),
                 case.1,
                 "input = {}",
                 case.0
