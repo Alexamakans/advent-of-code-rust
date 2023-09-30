@@ -117,6 +117,83 @@ where
     }
 }
 
+pub trait IntoSequenceGenerationIterator {
+    type Item;
+    type IntoIter;
+
+    fn into_sequence_generator(self) -> Self::IntoIter;
+}
+
+impl<T> IntoSequenceGenerationIterator for Vec<T>
+where
+    T: Clone,
+{
+    type Item = Vec<T>;
+    type IntoIter = SequenceGenerationIterator<T>;
+
+    fn into_sequence_generator(self) -> Self::IntoIter {
+        SequenceGenerationIterator {
+            current_indices: Vec::new(),
+            max_index: self.len() - 1,
+            values: self,
+        }
+    }
+}
+
+pub struct SequenceGenerationIterator<T>
+where
+    T: Clone,
+{
+    current_indices: Vec<usize>,
+    max_index: usize,
+    values: Vec<T>,
+}
+
+impl<T> SequenceGenerationIterator<T>
+where
+    T: Clone,
+{
+    fn output(&self) -> Vec<T> {
+        let mut result = Vec::new();
+        for index in self.current_indices.iter() {
+            result.push(self.values.get(*index).unwrap().clone());
+        }
+        result
+    }
+
+    pub fn set_indices(&mut self, indices: Vec<usize>) {
+        self.current_indices = indices.clone();
+    }
+}
+
+impl<T> Iterator for SequenceGenerationIterator<T>
+where
+    T: Clone,
+{
+    type Item = Vec<T>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let mut index = self.current_indices.len() as i32 - 1;
+
+        while index >= 0 {
+            let i = self.current_indices.get_mut(index as usize).unwrap();
+            if *i == self.max_index {
+                *i = 0;
+                index -= 1;
+            } else {
+                *i += 1;
+                break;
+            }
+        }
+
+        if index == -1 {
+            self.current_indices.insert(0, 0);
+        }
+
+        Some(self.output())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -126,13 +203,36 @@ mod tests {
         let v = vec![0, 1, 2];
         let permutations = v.clone().into_permutations().collect::<Vec<Vec<i32>>>();
         assert_eq!(permutations.len(), factorial(v.len() as u32) as usize);
-        assert_eq!(permutations, vec![
-            vec![0, 1, 2],
-            vec![1, 0, 2],
-            vec![0, 2, 1],
-            vec![2, 0, 1],
-            vec![1, 2, 0],
-            vec![2, 1, 0],
-        ]);
+        assert_eq!(
+            permutations,
+            vec![
+                vec![0, 1, 2],
+                vec![1, 0, 2],
+                vec![0, 2, 1],
+                vec![2, 0, 1],
+                vec![1, 2, 0],
+                vec![2, 1, 0],
+            ]
+        );
+    }
+
+    #[test]
+    fn test_sequence_generator_works() {
+        let values = vec!["A", "B", "C"];
+        let mut sequence_generator = values.into_sequence_generator();
+
+        assert_eq!(sequence_generator.next().unwrap(), vec!["A"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["B"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["C"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["A", "A"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["A", "B"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["A", "C"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["B", "A"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["B", "B"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["B", "C"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["C", "A"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["C", "B"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["C", "C"]);
+        assert_eq!(sequence_generator.next().unwrap(), vec!["A", "A", "A"]);
     }
 }
