@@ -2,7 +2,7 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: String) -> i32 {
+    fn part_one_driver(&self, input: &str) -> i32 {
         fn is_nice_string(s: &str) -> bool {
             let does_not_have_blacklisted_substrings =
                 !(s.contains("ab") || s.contains("cd") || s.contains("pq") || s.contains("xy"));
@@ -28,7 +28,7 @@ impl DaySolver<i32> for Solver {
         input.lines().filter(|line| is_nice_string(line)).count() as i32
     }
 
-    fn part_two_driver(&self, input: String) -> i32 {
+    fn part_two_driver(&self, input: &str) -> i32 {
         fn is_nice_string(s: &str) -> bool {
             let mut pairs = Vec::new();
             for index in 1..s.chars().count() {
@@ -89,7 +89,7 @@ mod tests {
 
         for case in cases {
             assert_eq!(
-                solver.part_one_driver(String::from(case.0)),
+                solver.part_one_driver(case.0),
                 case.1,
                 "input = {}",
                 case.0
@@ -110,7 +110,7 @@ mod tests {
         ];
 
         for case in cases {
-            assert_eq!(solver.part_two_driver(String::from(case.0)), case.1, "input = {}", case.0);
+            assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_two(), 53);

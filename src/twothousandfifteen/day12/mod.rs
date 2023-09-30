@@ -5,11 +5,11 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: String) -> i32 {
+    fn part_one_driver(&self, input: &str) -> i32 {
         extract_numbers(&input).into_iter().reduce(|acc, v| acc + v).unwrap()
     }
 
-    fn part_two_driver(&self, input: String) -> i32 {
+    fn part_two_driver(&self, input: &str) -> i32 {
         let root: Value = serde_json::from_str(&input).unwrap();
         get_sum_of_value(&root) as i32
     }
@@ -66,7 +66,7 @@ mod tests {
 
         for case in cases {
             assert_eq!(
-                solver.part_one_driver(String::from(case.0)),
+                solver.part_one_driver(case.0),
                 case.1,
                 "input = {}",
                 case.0
@@ -88,7 +88,7 @@ mod tests {
 
         for case in cases {
             assert_eq!(
-                solver.part_two_driver(String::from(case.0)),
+                solver.part_two_driver(case.0),
                 case.1,
                 "input = {}",
                 case.0

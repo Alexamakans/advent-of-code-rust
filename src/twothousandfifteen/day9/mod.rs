@@ -7,7 +7,7 @@ type Locations = Rc<RefCell<Vec<LocationType>>>;
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: String) -> i32 {
+    fn part_one_driver(&self, input: &str) -> i32 {
         let locations = parse_locations(&input);
 
         let mut shortest_distance = u32::MAX;
@@ -35,7 +35,7 @@ impl DaySolver<i32> for Solver {
         shortest_distance as i32
     }
 
-    fn part_two_driver(&self, input: String) -> i32 {
+    fn part_two_driver(&self, input: &str) -> i32 {
         let locations = parse_locations(&input);
 
         let mut longest_distance = u32::MIN;
@@ -169,7 +169,7 @@ Dublin to Belfast = 141"#,
 
         for case in cases {
             assert_eq!(
-                solver.part_one_driver(String::from(case.0)),
+                solver.part_one_driver(case.0),
                 case.1,
                 "input = {}",
                 case.0
@@ -190,7 +190,7 @@ Dublin to Belfast = 141"#,
         )];
 
         for case in cases {
-            assert_eq!(solver.part_two_driver(String::from(case.0)), case.1, "input = {}", case.0);
+            assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_two(), 898);

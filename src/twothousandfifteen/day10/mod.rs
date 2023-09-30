@@ -2,7 +2,7 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: String) -> i32 {
+    fn part_one_driver(&self, input: &str) -> i32 {
         let mut sum_length = 0;
         for line in input.lines() {
             let encoded = encode(&line, 40);
@@ -12,7 +12,7 @@ impl DaySolver<i32> for Solver {
         sum_length as i32
     }
 
-    fn part_two_driver(&self, input: String) -> i32 {
+    fn part_two_driver(&self, input: &str) -> i32 {
         let mut sum_length = 0;
         for line in input.lines() {
             let encoded = encode(&line, 50);

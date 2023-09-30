@@ -2,7 +2,7 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: String) -> i32 {
+    fn part_one_driver(&self, input: &str) -> i32 {
         let mut commands = Vec::new();
         let mut smallest_x = i32::MAX;
         let mut smallest_y = i32::MAX;
@@ -105,7 +105,7 @@ impl DaySolver<i32> for Solver {
         world.iter().flatten().filter(|e| **e).count() as i32
     }
 
-    fn part_two_driver(&self, input: String) -> i32 {
+    fn part_two_driver(&self, input: &str) -> i32 {
         let mut commands = Vec::new();
         let mut smallest_x = i32::MAX;
         let mut smallest_y = i32::MAX;
@@ -233,7 +233,7 @@ turn off 499,499 through 500,500"#,
 
         for case in cases {
             assert_eq!(
-                solver.part_one_driver(String::from(case.0)),
+                solver.part_one_driver(case.0),
                 case.1,
                 "input = {}",
                 case.0
@@ -252,7 +252,7 @@ toggle 0,0 through 999,999"#, 1 + 2000000)
         ];
 
         for case in cases {
-            assert_eq!(solver.part_two_driver(String::from(case.0)), case.1, "input = {}", case.0);
+            assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         }
 
         // assert_eq!(solver.part_two(), 123);

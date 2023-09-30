@@ -2,11 +2,11 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<String> for Solver {
-    fn part_one_driver(&self, input: String) -> String {
+    fn part_one_driver(&self, input: &str) -> String {
         get_next_password(&input)
     }
 
-    fn part_two_driver(&self, input: String) -> String {
+    fn part_two_driver(&self, input: &str) -> String {
         get_next_password(&get_next_password(&input))
     }
 
@@ -104,7 +104,7 @@ mod tests {
 
         for case in cases {
             assert_eq!(
-                solver.part_one_driver(String::from(case.0)),
+                solver.part_one_driver(case.0),
                 case.1,
                 "input = {}",
                 case.0

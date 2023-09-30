@@ -4,7 +4,7 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: String) -> i32 {
+    fn part_one_driver(&self, input: &str) -> i32 {
         let wire_signals = get_wires(&input);
         for wire in wire_signals.borrow().iter() {
             if wire.borrow().key == "a" {
@@ -14,7 +14,7 @@ impl DaySolver<i32> for Solver {
         unreachable!();
     }
 
-    fn part_two_driver(&self, input: String) -> i32 {
+    fn part_two_driver(&self, input: &str) -> i32 {
         let wire_signals = get_wires(&input);
 
         let wire_a = 'found: {

@@ -28,12 +28,12 @@ pub fn read_input(year: u16, day: u8) -> String {
 pub trait DaySolver<T> {
     fn read_input(&self) -> String;
     fn part_one(&self) -> T {
-        self.part_one_driver(self.read_input())
+        self.part_one_driver(&self.read_input())
     }
-    fn part_one_driver(&self, input: String) -> T;
+    fn part_one_driver(&self, input: &str) -> T;
 
     fn part_two(&self) -> T {
-        self.part_two_driver(self.read_input())
+        self.part_two_driver(&self.read_input())
     }
-    fn part_two_driver(&self, input: String) -> T;
+    fn part_two_driver(&self, input: &str) -> T;
 }

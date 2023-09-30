@@ -2,11 +2,11 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: String) -> i32 {
+    fn part_one_driver(&self, input: &str) -> i32 {
         todo!();
     }
 
-    fn part_two_driver(&self, input: String) -> i32 {
+    fn part_two_driver(&self, input: &str) -> i32 {
         todo!();
     }
 
@@ -26,7 +26,7 @@ mod tests {
         // let cases = vec![];
 
         // for case in cases {
-        //     assert_eq!(solver.part_one_driver(String::from(case.0)), case.1, "input = {}", case.0);
+        //     assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         // }
 
         // assert_eq!(solver.part_one(), 123);
@@ -38,7 +38,7 @@ mod tests {
         // let cases = vec![];
 
         // for case in cases {
-        //     assert_eq!(solver.part_two_driver(String::from(case.0)), case.1, "input = {}", case.0);
+        //     assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         // }
 
         // assert_eq!(solver.part_two(), 123);
