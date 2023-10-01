@@ -8,7 +8,7 @@ pub struct Solver {}
 impl DaySolver<i32> for Solver {
     fn part_one_driver(&self, input: &str) -> i32 {
         let num_threads = 10;
-        let chunk_size = 10_000;
+        let chunk_size = 5_000;
         let mut start_i = 1;
 
         let mut handles = VecDeque::new();
