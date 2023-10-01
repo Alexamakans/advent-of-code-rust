@@ -1,12 +1,5 @@
-#![feature(impl_trait_in_assoc_type)]
-
-use std::time::{Duration, Instant};
-
 use clap::Parser;
-
-mod twothousandfifteen;
-mod twothousandsixteen;
-mod utils;
+use std::time::{Duration, Instant};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -19,24 +12,6 @@ struct Args {
     part: u8,
 }
 
-macro_rules! add_module_evaluate {
-    ($module_name:ident, $day:expr, $part:expr) => {
-        $module_name::get_days()
-            .get(($day - 1) as usize)
-            .unwrap()
-            .evaluate($part)
-    };
-}
-
-macro_rules! add_module_evaluate_input {
-    ($module_name:ident, $day:expr, $part:expr, $input:expr) => {
-        $module_name::get_days()
-            .get(($day - 1) as usize)
-            .unwrap()
-            .evaluate_input($part, $input)
-    };
-}
-
 fn main() {
     let start = Instant::now();
     let args = Args::parse();
@@ -44,19 +19,8 @@ fn main() {
     assert!(args.part == 1 || args.part == 2);
 
     let result = match get_stdin_if_available() {
-        Some(input) => {
-            println!("Taking input from stdin");
-            match args.year {
-                2015 => add_module_evaluate_input!(twothousandfifteen, args.day, args.part, &input),
-                2016 => add_module_evaluate_input!(twothousandsixteen, args.day, args.part, &input),
-                _ => panic!("no module for year {}", args.year),
-            }
-        }
-        None => match args.year {
-            2015 => add_module_evaluate!(twothousandfifteen, args.day, args.part),
-            2016 => add_module_evaluate!(twothousandsixteen, args.day, args.part),
-            _ => panic!("no module for year {}", args.year),
-        },
+        Some(input) => aoclib::run_challenge_with_input(args.year, args.day, args.part, &input),
+        None => aoclib::run_challenge(args.year, args.day, args.part),
     };
 
     println!(

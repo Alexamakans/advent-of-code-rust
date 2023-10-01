@@ -6,8 +6,8 @@ impl DaySolver<i32> for Solver {
         let mut i = 1;
         loop {
             let s = format!("{}{}", input, i);
-            let hash = md5::calculate_hash(&s);
-            if hash.starts_with("00000") {
+            let hash = md5::calculate_hash_bytes(&s);
+            if hash[0] == 0 && hash[1] == 0 && hash[2] & 0xF0 == 0 {
                 return i;
             }
             i += 1;
@@ -18,8 +18,8 @@ impl DaySolver<i32> for Solver {
         let mut i = 1;
         loop {
             let s = format!("{}{}", input, i);
-            let hash = md5::calculate_hash(&s);
-            if hash.starts_with("000000") {
+            let hash = md5::calculate_hash_bytes(&s);
+            if hash[0] == 0 && hash[1] == 0 && hash[2] == 0 {
                 return i;
             }
             i += 1;
@@ -37,11 +37,8 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
-        let cases = vec![
-            ("abcdef", 609043),
-            ("pqrstuv", 1048970),
-        ];
+        let solver = Solver {};
+        let cases = vec![("abcdef", 609043), ("pqrstuv", 1048970)];
 
         for case in cases {
             assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
@@ -52,13 +49,13 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        // let solver = Solver{};
         // let cases = vec![];
 
         // for case in cases {
         //     assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         // }
 
-        // assert_eq!(solver.part_two(), 123);
+        let solver = Solver {};
+        assert_eq!(solver.part_two(), 9962624);
     }
 }
