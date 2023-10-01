@@ -2,11 +2,13 @@ pub mod math;
 pub mod md5;
 pub mod parsing;
 pub mod iterators;
+pub mod combinatorials;
 
 pub use math::*;
 pub use md5::*;
 pub use parsing::*;
 pub use iterators::*;
+pub use combinatorials::*;
 
 pub fn read_input(year: u16, day: u8) -> String {
     if day == 0 || day > 25 {
