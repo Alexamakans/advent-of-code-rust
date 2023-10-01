@@ -7,14 +7,39 @@ use super::{super::utils::*, YEAR};
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
     fn part_one_driver(&self, input: &str) -> i32 {
-        let mut i = 1;
+        let num_threads = 10;
+        let chunk_size = 10_000;
+        let mut start_i = 1;
+
+        let mut handles = VecDeque::new();
         loop {
-            let s = format!("{}{}", input, i);
-            let hash = md5::calculate_hash_bytes(&s);
-            if hash[0] == 0 && hash[1] == 0 && hash[2] & 0xF0 == 0 {
-                return i;
+            let input_clone = input.to_string();
+            handles.push_back(thread::spawn(move || {
+                for i in start_i..start_i+chunk_size {
+                    let s = format!("{}{}", input_clone, i);
+                    let hash = md5::calculate_hash_bytes(&s);
+                    if hash[0] == 0 && hash[1] == 0 && hash[2] & 0xF0 == 0 {
+                        return Some(i);
+                    }
+                }
+                None
+            }));
+            start_i += chunk_size;
+            if handles.len() >= num_threads {
+                let handle = handles.pop_front().unwrap();
+                match handle.join() {
+                    Ok(opt_result) => match opt_result {
+                        Some(result) => {
+                            for handle in handles {
+                                _ = handle.join(); // be nice and let the threads finish
+                            }
+                            return result;
+                        },
+                        None => (),
+                    },
+                    Err(e) => panic!("Join failed: {:?}", e),
+                }
             }
-            i += 1;
         }
     }
 
