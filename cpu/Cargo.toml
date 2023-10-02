@@ -1,0 +1,41 @@
+[package]
+name = "advent-of-code-rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "aoclib"
+path = "src/lib.rs"
+
+[[bin]]
+name ="aoc"
+path = "src/bin.rs"
+required-features = ["full"]
+
+[features]
+default = ["full"]
+full = ["challenges", "all-utils"]
+challenges = ["all-utils", "dep:clap", "dep:regex", "dep:serde", "dep:serde_json"]
+all-utils = ["combinatorials", "conway", "math", "md5", "parsing", "iterators"]
+combinatorials = []
+conway = []
+math = []
+md5 = []
+parsing = []
+iterators = []
+benchmark = ["challenges", "all-utils", "dep:criterion"]
+cuda-md5 = ["dep:cust"]
+
+[dependencies]
+clap = { version = "4.4.6", features = ["derive"], optional = true }
+criterion = { version = "0.5.1", features = ["html_reports"], optional = true }
+cust = { version = "0.3.2", optional = true }
+regex = { version = "1.9.5", optional = true }
+serde = { version = "1.0.188", optional = true }
+serde_json = { version = "1.0.107", optional = true }
+
+[[bench]]
+name = "benches"
+harness = false

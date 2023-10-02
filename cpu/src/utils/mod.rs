@@ -1,17 +1,34 @@
-pub mod math;
-pub mod md5;
-pub mod parsing;
-pub mod iterators;
+#[cfg(feature = "combinatorials")]
 pub mod combinatorials;
+#[cfg(feature = "conway")]
 pub mod conway;
+#[cfg(feature = "iterators")]
+pub mod iterators;
+#[cfg(feature = "math")]
+pub mod math;
+#[cfg(feature = "md5")]
+pub mod md5;
+#[cfg(feature = "parsing")]
+pub mod parsing;
+#[cfg(feature = "cuda-md5")]
+pub mod cuda_md5;
 
-pub use math::*;
-pub use md5::*;
-pub use parsing::*;
-pub use iterators::*;
+#[cfg(feature = "combinatorials")]
 pub use combinatorials::*;
+#[cfg(feature = "conway")]
 pub use conway::*;
+#[cfg(feature = "iterators")]
+pub use iterators::*;
+#[cfg(feature = "math")]
+pub use math::*;
+#[cfg(feature = "md5")]
+pub use md5::*;
+#[cfg(feature = "parsing")]
+pub use parsing::*;
+#[cfg(feature = "cuda-md5")]
+pub use cuda_md5::*;
 
+#[cfg(feature = "challenges")]
 pub fn read_input(year: u16, day: u8) -> String {
     if day == 0 || day > 25 {
         panic!("Bad day '{}'", day);
@@ -29,6 +46,7 @@ pub fn read_input(year: u16, day: u8) -> String {
     ))
 }
 
+#[cfg(feature = "challenges")]
 pub trait DaySolver<T> {
     fn read_input(&self) -> String;
     fn part_one(&self) -> T {

@@ -1,6 +1,9 @@
+#[cfg(feature = "benchmark")]
 use aoclib::utils::{DaySolver, md5};
+#[cfg(feature = "benchmark")]
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
+#[cfg(feature = "benchmark")]
 fn specific_benches(c: &mut Criterion) {
     let input = aoclib::twothousandfifteen::DayEighteen {}.read_input();
 
@@ -22,6 +25,7 @@ fn specific_benches(c: &mut Criterion) {
     });
 }
 
+#[cfg(feature = "benchmark")]
 fn bench_all_challenges(c: &mut Criterion) {
     for year in 2015..=2016 {
         for day in 1..=25 {
@@ -34,6 +38,13 @@ fn bench_all_challenges(c: &mut Criterion) {
     }
 }
 
+#[cfg(feature = "benchmark")]
 criterion_group!(specific, specific_benches);
+#[cfg(feature = "benchmark")]
 criterion_group!(challenges, bench_all_challenges);
+#[cfg(feature = "benchmark")]
 criterion_main!(specific, challenges);
+#[cfg(not(feature = "benchmark"))]
+fn main() {
+
+}

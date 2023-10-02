@@ -1,6 +1,5 @@
 use std::str::Chars;
 
-
 pub trait IntoPairsIterator {
     type Item;
     type IntoIter;

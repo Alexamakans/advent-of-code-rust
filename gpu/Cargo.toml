@@ -1,0 +1,15 @@
+[package]
+name = "aocgpulib"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "aocgpulib"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+cuda_std = "0.2.2"
+
+[build-dependencies]
+cuda_builder = "0.3.0"
