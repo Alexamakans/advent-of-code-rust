@@ -1,7 +1,6 @@
 use std::{
     collections::VecDeque,
     sync::{
-        mpsc::{self, Receiver, Sender},
         Arc, RwLock,
     },
     thread,
@@ -16,18 +15,18 @@ impl DaySolver<usize> for Solver {
         let chunk_size = 10_000;
         let mut start_i = 1;
         let should_exit = Arc::new(RwLock::new(false));
+        let input = input.bytes().collect::<Vec<u8>>();
 
         let mut handles = VecDeque::new();
         while handles.len() < num_threads {
-            let input = input.to_string();
+            let input = input.clone();
             let should_exit = should_exit.clone();
             handles.push_back(thread::spawn(move || loop {
                 for i in start_i..start_i + chunk_size {
                     if *should_exit.read().unwrap() {
                         return None;
                     }
-                    let s = format!("{}{}", input, i);
-                    let hash = md5::calculate_hash_bytes(&s);
+                    let hash = md5::calculate_hash_bytes(input.clone().into_iter().chain(i.to_string().bytes().into_iter()).collect::<Vec<u8>>());
                     if hash[0] == 0 && hash[1] == 0 && hash[2] & 0xF0 == 0 {
                         *should_exit.write().unwrap() = true;
                         return Some(i);
@@ -61,18 +60,18 @@ impl DaySolver<usize> for Solver {
         let chunk_size = 100_000;
         let mut start_i = 1;
         let should_exit = Arc::new(RwLock::new(false));
+        let input = input.bytes().collect::<Vec<u8>>();
 
         let mut handles = VecDeque::new();
         while handles.len() < num_threads {
-            let input = input.to_string();
+            let input = input.clone();
             let should_exit = should_exit.clone();
             handles.push_back(thread::spawn(move || loop {
                 for i in start_i..start_i + chunk_size {
                     if *should_exit.read().unwrap() {
                         return None;
                     }
-                    let s = format!("{}{}", input, i);
-                    let hash = md5::calculate_hash_bytes(&s);
+                    let hash = md5::calculate_hash_bytes(input.clone().into_iter().chain(i.to_string().bytes().into_iter()).collect::<Vec<u8>>());
                     if hash[0] == 0 && hash[1] == 0 && hash[2] == 0 {
                         *should_exit.write().unwrap() = true;
                         return Some(i);

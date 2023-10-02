@@ -17,7 +17,7 @@ fn specific_benches(c: &mut Criterion) {
 
     c.bench_function("md5_bytes", |b| {
         b.iter(|| {
-            black_box(md5::calculate_hash_bytes("yzbqklnj"));
+            black_box(md5::calculate_hash_bytes("yzbqklnj".bytes().collect()));
         });
     });
 }

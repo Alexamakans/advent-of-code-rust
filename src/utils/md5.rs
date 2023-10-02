@@ -108,9 +108,7 @@ pub fn calculate_hash(s: &str) -> String {
     )
 }
 
-pub fn calculate_hash_bytes(s: &str) -> [u8; 16] {
-    let mut b = s.bytes().collect::<Vec<u8>>();
-
+pub fn calculate_hash_bytes(mut b: Vec<u8>) -> [u8; 16] {
     {
         // Bit padding
         let input_length_bits = (b.len() as u64) * 8;
@@ -229,13 +227,13 @@ mod tests {
 
     #[test]
     fn md5_bytes_works() {
-        assert_eq!(calculate_hash_bytes(""), [0xd4, 0x1d, 0x8c, 0xd9, 0x8f, 0x00, 0xb2, 0x04, 0xe9, 0x80, 0x09, 0x98, 0xec, 0xf8, 0x42, 0x7e]);
+        assert_eq!(calculate_hash_bytes("".bytes().collect::<Vec<u8>>()), [0xd4, 0x1d, 0x8c, 0xd9, 0x8f, 0x00, 0xb2, 0x04, 0xe9, 0x80, 0x09, 0x98, 0xec, 0xf8, 0x42, 0x7e]);
         assert_eq!(
-            calculate_hash_bytes("The quick brown fox jumps over the lazy dog"),
+            calculate_hash_bytes("The quick brown fox jumps over the lazy dog".bytes().collect::<Vec<u8>>()),
             [0x9e, 0x10, 0x7d, 0x9d, 0x37, 0x2b, 0xb6, 0x82, 0x6b, 0xd8, 0x1d, 0x35, 0x42, 0xa4, 0x19, 0xd6]
         );
         assert_eq!(
-            calculate_hash_bytes("The quick brown fox jumps over the lazy dog."),
+            calculate_hash_bytes("The quick brown fox jumps over the lazy dog.".bytes().collect::<Vec<u8>>()),
             [0xe4, 0xd9, 0x09, 0xc2, 0x90, 0xd0, 0xfb, 0x1c, 0xa0, 0x68, 0xff, 0xad, 0xdf, 0x22, 0xcb, 0xd0]
         );
     }
