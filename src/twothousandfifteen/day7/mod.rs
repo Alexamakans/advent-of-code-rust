@@ -37,7 +37,7 @@ impl DaySolver<i32> for Solver {
         let wire_a_value = wire_a.borrow_mut().get_value();
         wire_b.borrow_mut().input_a = Rc::new(RefCell::new(WireValue::LITERAL(wire_a_value)));
         wire_b.borrow_mut().operation = Operation::VALUE;
-        
+
         // Reset cache
         for wire in wire_signals.borrow().iter() {
             wire.borrow_mut().cache = None;
@@ -97,14 +97,14 @@ impl Operation {
 }
 
 #[derive(Clone, Debug)]
-enum WireValue {
+enum WireValue<'a>{
     // From '123 -> x'
     LITERAL(u16),
     // All other cases
-    CONNECTION(Rc<RefCell<Wire>>),
+    CONNECTION(Rc<RefCell<Wire<'a>>>),
 }
 
-impl WireValue {
+impl<'a> WireValue<'a> {
     fn get_value(&mut self) -> u16 {
         match self {
             WireValue::LITERAL(value) => *value,
@@ -114,18 +114,18 @@ impl WireValue {
 }
 
 #[derive(Clone, Debug)]
-struct Wire {
-    key: String,
-    input_a: Rc<RefCell<WireValue>>,
-    input_b: Rc<RefCell<WireValue>>,
+struct Wire<'a> {
+    key: &'a str,
+    input_a: Rc<RefCell<WireValue<'a>>>,
+    input_b: Rc<RefCell<WireValue<'a>>>,
     operation: Operation,
     cache: Option<u16>,
 }
 
-impl Wire {
-    fn new(key: &str) -> Self {
+impl<'a> Wire<'a> {
+    fn new(key: &'a str) -> Self {
         Wire {
-            key: key.to_owned(),
+            key: key,
             input_a: Rc::new(RefCell::new(WireValue::LITERAL(0))),
             input_b: Rc::new(RefCell::new(WireValue::LITERAL(0))),
             operation: Operation::VALUE,
@@ -147,11 +147,11 @@ impl Wire {
     }
 }
 
-fn get_wires(input: &str) -> Rc<RefCell<Vec<Rc<RefCell<Wire>>>>> {
-    fn get_or_make_wire(
-        wires: Rc<RefCell<Vec<Rc<RefCell<Wire>>>>>,
-        key: &str,
-    ) -> Rc<RefCell<Wire>> {
+fn get_wires<'a>(input: &'a str) -> Rc<RefCell<Vec<Rc<RefCell<Wire<'a>>>>>> {
+    fn get_or_make_wire<'a>(
+        wires: Rc<RefCell<Vec<Rc<RefCell<Wire<'a>>>>>>,
+        key: &'a str,
+    ) -> Rc<RefCell<Wire<'a>>> {
         for wire in wires.borrow().iter() {
             if wire.borrow().key == key {
                 return wire.clone();
@@ -180,9 +180,8 @@ fn get_wires(input: &str) -> Rc<RefCell<Vec<Rc<RefCell<Wire>>>>> {
                     }
                     Err(_) => {
                         let left_wire = get_or_make_wire(wires.clone(), part);
-                        right_wire.borrow_mut().input_a = Rc::new(RefCell::new(
-                            WireValue::CONNECTION(left_wire),
-                        ));
+                        right_wire.borrow_mut().input_a =
+                            Rc::new(RefCell::new(WireValue::CONNECTION(left_wire)));
                     }
                 }
             }
@@ -198,9 +197,8 @@ fn get_wires(input: &str) -> Rc<RefCell<Vec<Rc<RefCell<Wire>>>>> {
                     }
                     Err(_) => {
                         let left_wire = get_or_make_wire(wires.clone(), part);
-                        right_wire.borrow_mut().input_a = Rc::new(RefCell::new(
-                            WireValue::CONNECTION(left_wire),
-                        ));
+                        right_wire.borrow_mut().input_a =
+                            Rc::new(RefCell::new(WireValue::CONNECTION(left_wire)));
                     }
                 }
             }
@@ -216,9 +214,8 @@ fn get_wires(input: &str) -> Rc<RefCell<Vec<Rc<RefCell<Wire>>>>> {
                     }
                     Err(_) => {
                         let left_wire = get_or_make_wire(wires.clone(), a);
-                        right_wire.borrow_mut().input_a = Rc::new(RefCell::new(
-                            WireValue::CONNECTION(left_wire),
-                        ));
+                        right_wire.borrow_mut().input_a =
+                            Rc::new(RefCell::new(WireValue::CONNECTION(left_wire)));
                     }
                 }
                 match b.parse::<u16>() {
@@ -228,9 +225,8 @@ fn get_wires(input: &str) -> Rc<RefCell<Vec<Rc<RefCell<Wire>>>>> {
                     }
                     Err(_) => {
                         let left_wire = get_or_make_wire(wires.clone(), b);
-                        right_wire.borrow_mut().input_b = Rc::new(RefCell::new(
-                            WireValue::CONNECTION(left_wire),
-                        ));
+                        right_wire.borrow_mut().input_b =
+                            Rc::new(RefCell::new(WireValue::CONNECTION(left_wire)));
                     }
                 }
             }
@@ -247,7 +243,7 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![(
             r#"123 -> x
 456 -> y
@@ -276,7 +272,12 @@ NOT y -> i"#,
             for (key, want) in case.1.iter() {
                 for wire in wires.borrow().iter() {
                     if key.eq(&wire.borrow().key) {
-                        assert_eq!(wire.borrow_mut().get_value(), *want as u16, "input = {}", case.0);
+                        assert_eq!(
+                            wire.borrow_mut().get_value(),
+                            *want as u16,
+                            "input = {}",
+                            case.0
+                        );
                         checks_passed += 1;
                     }
                 }
@@ -290,7 +291,7 @@ NOT y -> i"#,
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_two(), 14134);
     }
 }
