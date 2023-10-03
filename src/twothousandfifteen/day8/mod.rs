@@ -42,9 +42,6 @@ impl DaySolver<i32> for Solver {
                 }
             }
 
-            println!("line = '{}'", line);
-            println!("literal_len = {}", literal_len);
-            println!("data_len = {}", data_len);
             sum_literal_len += literal_len; // remove the outer double quotes, they don't count
             sum_data_len += data_len;
         }
