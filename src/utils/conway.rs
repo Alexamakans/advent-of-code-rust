@@ -6,21 +6,26 @@ pub struct World {
     height: usize,
     cells: Vec<Vec<bool>>,
     backbuffer: Vec<Vec<bool>>,
+    on_character: char,
+    off_character: char,
 }
 
 impl World {
-    pub fn new(width: usize, height: usize) -> Self {
-        World {
-            width,
-            height,
-            cells: vec![vec![false].repeat(height); width],
-            backbuffer: vec![vec![false].repeat(height); width],
+    pub fn new(width: usize, height: usize) -> Result<Self, ConwayError> {
+        if width == 0 || height == 0 {
+            Err(ConwayError {
+                error: Failure::InvalidSize(width, height),
+            })
+        } else {
+            Ok(World {
+                width,
+                height,
+                cells: vec![vec![false].repeat(height); width],
+                backbuffer: vec![vec![false].repeat(height); width],
+                on_character: '#',
+                off_character: '.',
+            })
         }
-    }
-
-    pub fn set_cell(&mut self, x: usize, y: usize, state: bool) {
-        *self.cells.get_mut(y).unwrap().get_mut(x).unwrap() = state;
-        *self.backbuffer.get_mut(y).unwrap().get_mut(x).unwrap() = state;
     }
 
     pub fn from_str(s: &str, on_character: char, off_character: char) -> Result<Self, ConwayError> {
@@ -46,7 +51,34 @@ impl World {
             height,
             backbuffer: cells.clone(),
             cells,
+            on_character,
+            off_character,
         })
+    }
+
+    pub fn get_width(&self) -> usize {
+        self.width
+    }
+
+    pub fn get_height(&self) -> usize {
+        self.height
+    }
+
+    pub fn set_characters(&mut self, on_character: char, off_character: char) {
+        self.on_character = on_character;
+        self.off_character = off_character;
+    }
+
+    pub fn set_cell_state(&mut self, x: usize, y: usize, state: bool) -> Result<(), ConwayError> {
+        if y >= self.cells.len() || x >= self.cells[0].len() {
+            Err(ConwayError {
+                error: Failure::OutOfBounds(x, y, self.width, self.height),
+            })
+        } else {
+            *self.cells.get_mut(y).unwrap().get_mut(x).unwrap() = state;
+            *self.backbuffer.get_mut(y).unwrap().get_mut(x).unwrap() = state;
+            Ok(())
+        }
     }
 
     pub fn update(&mut self) {
@@ -94,9 +126,32 @@ impl World {
     }
 }
 
+impl Display for World {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut lines = Vec::new();
+        for row in self.cells.iter() {
+            let mut line = String::new();
+            for cell in row {
+                match cell {
+                    true => line.push(self.on_character),
+                    false => line.push(self.off_character),
+                }
+            }
+            lines.push(line);
+        }
+
+        write!(f, "{}", lines.join("\n"))
+    }
+}
+
 #[derive(Clone, Debug)]
 pub enum Failure {
+    /// InvalidSize(width, height)
+    InvalidSize(usize, usize),
+    /// UnexpectedCharacter(the_unexpected_character)
     UnexpectedCharacter(char),
+    /// OutOfBounds(x, y, width, height)
+    OutOfBounds(usize, usize, usize, usize),
 }
 
 #[derive(Clone, Debug)]
@@ -112,6 +167,20 @@ impl Display for ConwayError {
                 f,
                 "encountered unexpected character '{}' while parsing world from string",
                 character
+            ),
+            Failure::OutOfBounds(x, y, width, height) => write!(
+                f,
+                "tried to index ({}, {}), valid indices are ([0..{}], [0..{}])",
+                x,
+                y,
+                width - 1,
+                height - 1
+            ),
+            Failure::InvalidSize(width, height) => write!(
+                f,
+                "tried to create a world with dimensions ({}, {}), both width and height must be > 0",
+                width,
+                height
             ),
         }
     }
