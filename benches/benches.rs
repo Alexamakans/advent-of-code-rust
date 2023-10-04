@@ -1,4 +1,4 @@
-use aoclib::utils::{DaySolver, md5};
+use aoclib::utils::{md5, DaySolver, PrimeIterator};
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 fn specific_benches(c: &mut Criterion) {
@@ -18,6 +18,15 @@ fn specific_benches(c: &mut Criterion) {
     c.bench_function("md5_bytes", |b| {
         b.iter(|| {
             black_box(md5::calculate_hash_bytes("yzbqklnj".bytes().collect()));
+        });
+    });
+
+    c.bench_function("prime_iterator", |b| {
+        b.iter(|| {
+            let mut it = PrimeIterator::new();
+            for _ in 0..100000 {
+                black_box(it.next());
+            }
         });
     });
 }
