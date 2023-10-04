@@ -45,7 +45,6 @@ impl DaySolver<usize> for Solver {
             .next()
             .unwrap();
 
-        // solution_from_e_to_molecule(mappings, target_molecule)
         solution_from_molecule_to_e(mappings, target_molecule)
     }
 
@@ -53,45 +52,6 @@ impl DaySolver<usize> for Solver {
         read_input(YEAR, 19)
     }
 }
-
-fn solution_from_e_to_molecule<'a, T>(mappings: T, target_molecule: &str) -> usize
-where
-    T: Iterator<Item = Mapping<'a>> + Clone,
-{
-    let mut fewest_steps_required = usize::MAX;
-    let mut queue = VecDeque::new();
-    queue.push_back((0, String::from("e")));
-    while let Some(state) = queue.pop_front() {
-        if state.0 >= fewest_steps_required {
-            // Required to avoid infinite loopediloop.
-            continue;
-        }
-
-        for mapping in mappings.clone() {
-            let indices = state.1.match_indices(mapping.from);
-            for (index, m) in indices {
-                let result = state
-                    .1
-                    .chars()
-                    .take(index)
-                    .chain(mapping.to.chars())
-                    .chain(state.1.chars().skip(index + m.len()))
-                    .collect::<String>();
-                let steps_required = state.0 + 1;
-                if result == target_molecule {
-                    if steps_required < fewest_steps_required {
-                        fewest_steps_required = steps_required;
-                    }
-                }
-                queue.push_back((steps_required, result));
-            }
-        }
-    }
-
-    fewest_steps_required
-}
-
-
 
 fn solution_from_molecule_to_e<'a, T>(mappings: T, target_molecule: &str) -> usize
 where
@@ -102,7 +62,9 @@ where
     let mut fewest_steps_required = usize::MAX;
     let mut queue = VecDeque::new();
     queue.push_back((0, target_molecule.to_string()));
-    while let Some(state) = queue.pop_front() {
+    let mut visited = HashSet::new();
+    while let Some(state) = queue.pop_front() { // bfs
+        // while let Some(state) = queue.pop_back() { // dfs
         if state.0 >= fewest_steps_required {
             // Required to avoid infinite loopediloop.
             continue;
@@ -119,6 +81,9 @@ where
                     .chain(state.1.chars().skip(index + m.len()))
                     .collect::<String>();
                 let steps_required = state.0 + 1;
+                if !visited.insert(result.clone()) {
+                    continue;
+                }
                 if result == "e" {
                     if steps_required < fewest_steps_required {
                         fewest_steps_required = steps_required;
