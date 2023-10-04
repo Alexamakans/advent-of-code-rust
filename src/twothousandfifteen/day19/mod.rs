@@ -57,44 +57,29 @@ fn solution_from_molecule_to_e<'a, T>(mappings: T, target_molecule: &str) -> usi
 where
     T: Iterator<Item = Mapping<'a>> + Clone,
 {
-    // TODO: Build up possible paths to other combinations beforehand or something.
+    // Wish I could have done this the proper way, maybe later.
+    // https://en.wikipedia.org/wiki/Context-free_grammar
 
-    let mut fewest_steps_required = usize::MAX;
-    let mut queue = VecDeque::new();
-    queue.push_back((0, target_molecule.to_string()));
-    let mut visited = HashSet::new();
-    while let Some(state) = queue.pop_front() { // bfs
-        // while let Some(state) = queue.pop_back() { // dfs
-        if state.0 >= fewest_steps_required {
-            // Required to avoid infinite loopediloop.
-            continue;
-        }
-
+    let mut result = target_molecule.to_string();
+    let mut steps = 0;
+    loop {
         for mapping in mappings.clone() {
-            let indices = state.1.match_indices(mapping.to);
+            let indices = result.match_indices(mapping.to);
             for (index, m) in indices {
-                let result = state
-                    .1
+                result = result
                     .chars()
                     .take(index)
                     .chain(mapping.from.chars())
-                    .chain(state.1.chars().skip(index + m.len()))
+                    .chain(result.chars().skip(index + m.len()))
                     .collect::<String>();
-                let steps_required = state.0 + 1;
-                if !visited.insert(result.clone()) {
-                    continue;
-                }
+                steps += 1;
                 if result == "e" {
-                    if steps_required < fewest_steps_required {
-                        fewest_steps_required = steps_required;
-                    }
+                    return steps;
                 }
-                queue.push_back((steps_required, result));
+                break;
             }
         }
     }
-
-    fewest_steps_required
 }
 
 struct Mapping<'a> {
