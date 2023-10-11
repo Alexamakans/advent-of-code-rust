@@ -11,10 +11,10 @@ impl DaySolver<i32> for Solver {
             match chars.next().unwrap() {
                 'L' => {
                     heading = turn(Direction::Left, heading);
-                },
+                }
                 'R' => {
                     heading = turn(Direction::Right, heading);
-                },
+                }
                 _ => unreachable!(),
             }
             let num_steps = chars.as_str().parse::<i32>().unwrap();
@@ -33,10 +33,10 @@ impl DaySolver<i32> for Solver {
             match chars.next().unwrap() {
                 'L' => {
                     heading = turn(Direction::Left, heading);
-                },
+                }
                 'R' => {
                     heading = turn(Direction::Right, heading);
-                },
+                }
                 _ => unreachable!(),
             }
             let num_steps = chars.as_str().parse::<i32>().unwrap();
@@ -58,7 +58,7 @@ impl DaySolver<i32> for Solver {
 
 enum Direction {
     Left,
-    Right
+    Right,
 }
 
 fn turn(direction: Direction, heading: i32) -> i32 {
@@ -84,12 +84,8 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
-        let cases = vec![
-            ("R2, L3", 5),
-            ("R2, R2, R2", 2),
-            ("R5, L5, R5, R3", 12),
-        ];
+        let solver = Solver {};
+        let cases = vec![("R2, L3", 5), ("R2, R2, R2", 2), ("R5, L5, R5, R3", 12)];
 
         for case in cases {
             assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
@@ -100,10 +96,8 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
-        let cases = vec![
-            ("R8, R4, R4, R8", 4),
-        ];
+        let solver = Solver {};
+        let cases = vec![("R8, R4, R4, R8", 4)];
 
         for case in cases {
             assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
