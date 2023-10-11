@@ -1,8 +1,6 @@
 use std::{
     collections::VecDeque,
-    sync::{
-        Arc, RwLock,
-    },
+    sync::{Arc, RwLock},
     thread,
 };
 
@@ -26,7 +24,13 @@ impl DaySolver<usize> for Solver {
                     if *should_exit.read().unwrap() {
                         return None;
                     }
-                    let hash = md5::calculate_hash_bytes(input.clone().into_iter().chain(i.to_string().bytes().into_iter()).collect::<Vec<u8>>());
+                    let hash = md5::calculate_hash_bytes(
+                        input
+                            .clone()
+                            .into_iter()
+                            .chain(i.to_string().bytes().into_iter())
+                            .collect::<Vec<u8>>(),
+                    );
                     if hash[0] == 0 && hash[1] == 0 && hash[2] & 0xF0 == 0 {
                         *should_exit.write().unwrap() = true;
                         return Some(i);
@@ -71,7 +75,13 @@ impl DaySolver<usize> for Solver {
                     if *should_exit.read().unwrap() {
                         return None;
                     }
-                    let hash = md5::calculate_hash_bytes(input.clone().into_iter().chain(i.to_string().bytes().into_iter()).collect::<Vec<u8>>());
+                    let hash = md5::calculate_hash_bytes(
+                        input
+                            .clone()
+                            .into_iter()
+                            .chain(i.to_string().bytes().into_iter())
+                            .collect::<Vec<u8>>(),
+                    );
                     if hash[0] == 0 && hash[1] == 0 && hash[2] == 0 {
                         *should_exit.write().unwrap() = true;
                         return Some(i);
@@ -115,7 +125,7 @@ mod tests {
         // let cases = vec![("abcdef", 609043), ("pqrstuv", 1048970)];
 
         // for case in cases {
-            // assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
+        // assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         // }
 
         assert_eq!(solver.part_one(), 282749);

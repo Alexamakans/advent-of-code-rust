@@ -32,12 +32,8 @@ impl DaySolver<i32> for Solver {
                     if ring_a == ring_b {
                         continue;
                     }
-                    
-                    let gear = vec![
-                        weapon.clone(),
-                        ring_a.clone(),
-                        ring_b.clone(),
-                    ];
+
+                    let gear = vec![weapon.clone(), ring_a.clone(), ring_b.clone()];
                     let player = Player::from_gear(gear);
                     if player.money_spent < lowest_money_spent {
                         if get_winner(boss.clone(), player.clone()) == 1 {
@@ -72,7 +68,7 @@ impl DaySolver<i32> for Solver {
                         if ring_a == ring_b {
                             continue;
                         }
-                        
+
                         let gear = vec![
                             weapon.clone(),
                             armor.clone(),
@@ -123,12 +119,8 @@ impl DaySolver<i32> for Solver {
                     if ring_a == ring_b {
                         continue;
                     }
-                    
-                    let gear = vec![
-                        weapon.clone(),
-                        ring_a.clone(),
-                        ring_b.clone(),
-                    ];
+
+                    let gear = vec![weapon.clone(), ring_a.clone(), ring_b.clone()];
                     let player = Player::from_gear(gear);
                     if player.money_spent > highest_money_spent {
                         if get_winner(boss.clone(), player.clone()) == 0 {
@@ -163,7 +155,7 @@ impl DaySolver<i32> for Solver {
                         if ring_a == ring_b {
                             continue;
                         }
-                        
+
                         let gear = vec![
                             weapon.clone(),
                             armor.clone(),
@@ -287,7 +279,7 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_one(), 78);
     }
 

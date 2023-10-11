@@ -14,7 +14,7 @@ pub trait IntoIncreasingSequenceIterator {
     /// vec![A, C]
     /// vec![B, A]
     /// ```
-    /// 
+    ///
     /// and so on, forever.
     fn into_increasing_sequence(self) -> Self::IntoIter;
 }
@@ -35,8 +35,7 @@ where
     }
 }
 
-impl<'a> IntoIncreasingSequenceIterator for Chars<'a>
-{
+impl<'a> IntoIncreasingSequenceIterator for Chars<'a> {
     type Item = Vec<char>;
     type IntoIter = IncreasingSequenceIterator<char>;
 

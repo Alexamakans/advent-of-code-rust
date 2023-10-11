@@ -24,8 +24,7 @@ where
     }
 }
 
-impl<'a> IntoPermutationIterator for Chars<'a>
-{
+impl<'a> IntoPermutationIterator for Chars<'a> {
     type Item = char;
     type IntoIter = PermutationIterator<char>;
 

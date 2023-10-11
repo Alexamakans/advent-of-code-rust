@@ -103,12 +103,7 @@ mod tests {
         let cases = vec![("abcdefgh", "abcdffaa")];
 
         for case in cases {
-            assert_eq!(
-                solver.part_one_driver(case.0),
-                case.1,
-                "input = {}",
-                case.0
-            );
+            assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_one(), "hxbxxyzz");
@@ -116,7 +111,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_two(), "hxcaabcc");
     }
 }

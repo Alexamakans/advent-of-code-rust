@@ -34,20 +34,23 @@ impl DaySolver<i32> for Solver {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![
-            ("(())", 0), ("()()", 0),
-            ("(((", 3), ("(()(()(", 3),
+            ("(())", 0),
+            ("()()", 0),
+            ("(((", 3),
+            ("(()(()(", 3),
             ("))(((((", 3),
-            ("())", -1), ("))(", -1),
-            (")))", -3), (")())())", -3)
+            ("())", -1),
+            ("))(", -1),
+            (")))", -3),
+            (")())())", -3),
         ];
 
         for case in cases {
@@ -59,10 +62,8 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
-        let cases = vec![
-            (")", 1), ("()())", 5),
-        ];
+        let solver = Solver {};
+        let cases = vec![(")", 1), ("()())", 5)];
 
         for case in cases {
             assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);

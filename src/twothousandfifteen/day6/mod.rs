@@ -181,11 +181,13 @@ impl DaySolver<i32> for Solver {
         fn do_thing(cell: u32, c: i32) -> u32 {
             match c {
                 0 => cell + 1,
-                1 => if cell >= 1 {
-                    cell - 1
-                } else {
-                    0
-                },
+                1 => {
+                    if cell >= 1 {
+                        cell - 1
+                    } else {
+                        0
+                    }
+                }
                 2 => cell + 2,
                 _ => unreachable!(),
             }
@@ -232,12 +234,7 @@ turn off 499,499 through 500,500"#,
         )];
 
         for case in cases {
-            assert_eq!(
-                solver.part_one_driver(case.0),
-                case.1,
-                "input = {}",
-                case.0
-            );
+            assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_one(), 569999);
@@ -245,11 +242,12 @@ turn off 499,499 through 500,500"#,
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
-        let cases = vec![
-            (r#"turn on 0,0 through 0,0
-toggle 0,0 through 999,999"#, 1 + 2000000)
-        ];
+        let solver = Solver {};
+        let cases = vec![(
+            r#"turn on 0,0 through 0,0
+toggle 0,0 through 999,999"#,
+            1 + 2000000,
+        )];
 
         for case in cases {
             assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);

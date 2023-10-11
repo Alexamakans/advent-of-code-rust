@@ -1,6 +1,5 @@
 use std::str::Chars;
 
-
 pub trait IntoPairsIterator {
     type Item;
     type IntoIter;
@@ -35,8 +34,7 @@ where
     }
 }
 
-impl<'a> IntoPairsIterator for Chars<'a>
-{
+impl<'a> IntoPairsIterator for Chars<'a> {
     type Item = char;
     type IntoIter = PairsIterator<impl Iterator<Item = char>, impl Iterator<Item = char>>;
 
@@ -48,8 +46,7 @@ impl<'a> IntoPairsIterator for Chars<'a>
     }
 }
 
-pub struct PairsIterator<A, B>
-{
+pub struct PairsIterator<A, B> {
     a: A,
     b: B,
 }

@@ -97,7 +97,7 @@ impl Operation {
 }
 
 #[derive(Clone, Debug)]
-enum WireValue<'a>{
+enum WireValue<'a> {
     // From '123 -> x'
     LITERAL(u16),
     // All other cases

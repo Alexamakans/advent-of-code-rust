@@ -34,7 +34,9 @@ pub fn get_best_quantum_entanglement(mut packages: Vec<u16>, num_groups: u16) ->
     for combination in combinations {
         let combination_length = combination.len();
         if combination_length <= best_length {
-            let quantum_entanglement = combination.into_iter().fold(1, |acc, cur| acc as u64 * cur as u64);
+            let quantum_entanglement = combination
+                .into_iter()
+                .fold(1, |acc, cur| acc as u64 * cur as u64);
             if quantum_entanglement < best_quantum_entanglement {
                 best_length = combination_length;
                 best_quantum_entanglement = quantum_entanglement;
@@ -51,7 +53,7 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         // let cases = vec![];
 
         // for case in cases {
@@ -63,7 +65,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         // let cases = vec![];
 
         // for case in cases {

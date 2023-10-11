@@ -32,15 +32,15 @@ impl DaySolver<i32> for Solver {
         fn is_nice_string(s: &str) -> bool {
             let mut pairs = Vec::new();
             for index in 1..s.chars().count() {
-                let a = s.chars().nth(index-1).unwrap();
+                let a = s.chars().nth(index - 1).unwrap();
                 let b = s.chars().nth(index).unwrap();
                 // Store indices so we can check that they don't overlap
-                pairs.push((index-1, index, (a, b)));
+                pairs.push((index - 1, index, (a, b)));
             }
 
             let has_non_overlapping_pairs = 'found: {
                 for i in 0..pairs.len() {
-                    for j in (i+1)..pairs.len() {
+                    for j in (i + 1)..pairs.len() {
                         if pairs[i].2 == pairs[j].2 && pairs[i].1 != pairs[j].0 {
                             break 'found true;
                         }
@@ -50,10 +50,10 @@ impl DaySolver<i32> for Solver {
             };
 
             let has_sandwiched_letter = 'found: {
-                for i in 1..s.chars().count()-1 {
-                    let prev = s.chars().nth(i-1).unwrap();
+                for i in 1..s.chars().count() - 1 {
+                    let prev = s.chars().nth(i - 1).unwrap();
                     let me = s.chars().nth(i).unwrap();
-                    let next = s.chars().nth(i+1).unwrap();
+                    let next = s.chars().nth(i + 1).unwrap();
                     if me != prev && prev == next {
                         break 'found true;
                     }
@@ -88,12 +88,7 @@ mod tests {
         ];
 
         for case in cases {
-            assert_eq!(
-                solver.part_one_driver(case.0),
-                case.1,
-                "input = {}",
-                case.0
-            );
+            assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_one(), 258);
@@ -101,7 +96,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![
             ("qjhvhtzxzqqjkmpb", 1),
             ("xxyxx", 1),

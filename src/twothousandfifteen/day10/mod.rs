@@ -33,7 +33,7 @@ fn encode(s: &str, iterations: u32) -> String {
         let mut iteration_result = String::new();
         let sequences = extract_repeating_sequences(result.chars());
         for sequence in sequences.iter() {
-            let length = sequence.0.1 - sequence.0.0;
+            let length = sequence.0 .1 - sequence.0 .0;
             iteration_result.push_str(&format!("{}{}", length, sequence.1));
         }
         result = iteration_result;
@@ -48,7 +48,7 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![
             ("1", 1, "11"),
             ("11", 1, "21"),
@@ -66,7 +66,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![
             ("1", 1, "11"),
             ("11", 1, "21"),

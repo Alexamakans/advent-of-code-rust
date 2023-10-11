@@ -7,10 +7,12 @@ impl DaySolver<usize> for Solver {
         let num_houses = 3_000_000;
         let presents_per_elf = 10;
         // 10 + e * 10 because all house numbers are divisible by 1 and itself
-        let mut houses = (0..num_houses).map(|e| presents_per_elf + e * presents_per_elf).collect::<Vec<u32>>();
+        let mut houses = (0..num_houses)
+            .map(|e| presents_per_elf + e * presents_per_elf)
+            .collect::<Vec<u32>>();
 
         for elf_number in 2..num_houses {
-             // first house is account for in our initialization, so we can skip the house it starts at
+            // first house is account for in our initialization, so we can skip the house it starts at
             let mut house_number = elf_number * 2;
             loop {
                 if house_number >= houses.len() as u32 {
@@ -37,10 +39,12 @@ impl DaySolver<usize> for Solver {
         let num_houses = 3_000_000;
         let presents_per_elf = 11;
         // 11 + e * 11 because all house numbers are divisible by 1 and itself
-        let mut houses = (0..num_houses).map(|e| presents_per_elf + e * presents_per_elf).collect::<Vec<u32>>();
+        let mut houses = (0..num_houses)
+            .map(|e| presents_per_elf + e * presents_per_elf)
+            .collect::<Vec<u32>>();
 
         for elf_number in 2..num_houses {
-             // first house is account for in our initialization, so we can skip the house it starts at
+            // first house is account for in our initialization, so we can skip the house it starts at
             let mut house_number = elf_number * 2;
             let mut houses_left_to_visit = 49;
             while houses_left_to_visit > 0 {
@@ -87,7 +91,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_two(), 705600);
     }
 }

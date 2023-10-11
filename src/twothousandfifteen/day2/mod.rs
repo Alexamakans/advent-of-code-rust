@@ -40,7 +40,7 @@ impl DaySolver<i32> for Solver {
 
             let ribbon_wrapping = smallest_sides
                 .into_iter()
-                .map(|v| 2*v)
+                .map(|v| 2 * v)
                 .reduce(|acc, v| acc + v)
                 .unwrap();
             let ribbon_bow = a * b * c;
@@ -69,12 +69,7 @@ mod tests {
         ];
 
         for case in cases {
-            assert_eq!(
-                solver.part_one_driver(case.0),
-                case.1,
-                "input = {}",
-                case.0
-            );
+            assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_one(), 1606483);
@@ -89,12 +84,7 @@ mod tests {
         ];
 
         for case in cases {
-            assert_eq!(
-                solver.part_two_driver(case.0),
-                case.1,
-                "input = {}",
-                case.0
-            );
+            assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_two(), 3842356);

@@ -17,9 +17,13 @@ impl DaySolver<u32> for Solver {
             .map(|line| line.parse::<u32>().unwrap())
             .collect::<Vec<u32>>();
         descending_sorted_containers.sort_by(|a, b| b.cmp(a));
-        let combinations = get_combinations_to_reach_target_value(&descending_sorted_containers, 150);
+        let combinations =
+            get_combinations_to_reach_target_value(&descending_sorted_containers, 150);
         let minimum_possible = combinations.iter().min_by_key(|e| e.len()).unwrap().len();
-        combinations.into_iter().filter(|e| e.len() == minimum_possible).count() as u32
+        combinations
+            .into_iter()
+            .filter(|e| e.len() == minimum_possible)
+            .count() as u32
     }
 
     fn read_input(&self) -> String {
@@ -51,7 +55,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_two(), 18);
     }
 }

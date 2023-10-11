@@ -12,27 +12,23 @@ impl DaySolver<i32> for Solver {
             while index < literal_len {
                 let c = line.chars().nth(index).unwrap();
                 match c {
-                    '\\' => {
-                        match line.chars().nth(index+1) {
-                            Some(next_ch) => {
-                                match next_ch {
-                                    'x' => {
-                                        data_len += 1;
-                                        index += 4;
-                                    },
-                                    '"' => {
-                                        data_len += 1;
-                                        index += 2;
-                                    },
-                                    '\\' => {
-                                        data_len += 1;
-                                        index += 2;
-                                    },
-                                    _ => unreachable!(),
-                                }
-                            },
-                            None => unreachable!(),
-                        }
+                    '\\' => match line.chars().nth(index + 1) {
+                        Some(next_ch) => match next_ch {
+                            'x' => {
+                                data_len += 1;
+                                index += 4;
+                            }
+                            '"' => {
+                                data_len += 1;
+                                index += 2;
+                            }
+                            '\\' => {
+                                data_len += 1;
+                                index += 2;
+                            }
+                            _ => unreachable!(),
+                        },
+                        None => unreachable!(),
                     },
                     '"' => index += 1,
                     _ => {
@@ -72,11 +68,11 @@ fn encode(s: &str) -> String {
             '"' => {
                 result.push('\\');
                 result.push('"');
-            },
+            }
             '\\' => {
                 result.push('\\');
                 result.push('\\');
-            },
+            }
             _ => result.push(c),
         }
     }
@@ -90,12 +86,12 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![
-            ("\"\"", 2-0),
-            ("\"abc\"", 5-3),
-            ("\"aaa\\\"aaa\"", 10-7),
-            ("\"\\x27\"", 6-1),
+            ("\"\"", 2 - 0),
+            ("\"abc\"", 5 - 3),
+            ("\"aaa\\\"aaa\"", 10 - 7),
+            ("\"\\x27\"", 6 - 1),
         ];
 
         for case in cases {
@@ -107,12 +103,12 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![
-            ("\"\"", 6-2),
-            ("\"abc\"", 9-5),
-            ("\"aaa\\\"aaa\"", 16-10),
-            ("\"\\x27\"", 11-6),
+            ("\"\"", 6 - 2),
+            ("\"abc\"", 9 - 5),
+            ("\"aaa\\\"aaa\"", 16 - 10),
+            ("\"\\x27\"", 11 - 6),
         ];
 
         for case in cases {

@@ -15,7 +15,6 @@ impl DaySolver<i32> for Solver {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

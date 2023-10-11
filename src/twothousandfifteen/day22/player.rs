@@ -1,4 +1,4 @@
-use super::{Spell, Effect};
+use super::{Effect, Spell};
 
 #[derive(Clone, PartialEq, Eq, Hash, Debug)]
 pub struct Player {

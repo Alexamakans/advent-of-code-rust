@@ -22,20 +22,20 @@ impl DaySolver<i32> for Solver {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
-        let cases = vec![
-            (r"inc a
+        let solver = Solver {};
+        let cases = vec![(
+            r"inc a
 jio a, +2
 tpl a
-inc a", 2)
-        ];
+inc a",
+            2,
+        )];
 
         for case in cases {
             let mut cpu = cpu::Cpu::new();

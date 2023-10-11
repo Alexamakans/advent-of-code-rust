@@ -101,7 +101,7 @@ impl Location {
                 return Some(c.clone());
             }
         }
-        
+
         for c in other.borrow().connections.borrow().iter() {
             if c.borrow().to.borrow().name == self.name {
                 return Some(c.clone());
@@ -168,12 +168,7 @@ Dublin to Belfast = 141"#,
         )];
 
         for case in cases {
-            assert_eq!(
-                solver.part_one_driver(case.0),
-                case.1,
-                "input = {}",
-                case.0
-            );
+            assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         }
 
         assert_eq!(solver.part_one(), 251);

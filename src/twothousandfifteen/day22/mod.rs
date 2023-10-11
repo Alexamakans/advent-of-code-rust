@@ -104,7 +104,8 @@ impl DaySolver<i32> for Solver {
 
         queue.push_back(original_state.clone());
         while let Some(mut state) = queue.pop_front() {
-            { // part 2 change here
+            {
+                // part 2 change here
                 state.player.hit_points -= 1;
                 if state.player.hit_points <= 0 {
                     continue;
@@ -178,7 +179,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_two(), 1309);
     }
 }

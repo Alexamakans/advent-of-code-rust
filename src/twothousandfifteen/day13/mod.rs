@@ -31,7 +31,7 @@ impl DaySolver<i32> for Solver {
             people_set.insert(interaction.0.clone());
             interactions.push(interaction);
         }
-        
+
         let mut people = people_set.into_iter().collect::<Vec<String>>();
         people.push(String::from("Me"));
         get_optimal_happiness(people, &interactions)
@@ -58,7 +58,10 @@ fn get_optimal_happiness(people: Vec<String>, interactions: &Vec<Interaction>) -
         let last = permutation.last().unwrap();
         let mut happiness = get_happiness(first, last, &interactions);
 
-        let pairs = permutation.iter().take(permutation.len() - 1).zip(permutation.iter().skip(1));
+        let pairs = permutation
+            .iter()
+            .take(permutation.len() - 1)
+            .zip(permutation.iter().skip(1));
         for pair in pairs {
             happiness += get_happiness(pair.0, pair.1, &interactions);
         }
@@ -71,11 +74,7 @@ fn get_optimal_happiness(people: Vec<String>, interactions: &Vec<Interaction>) -
     best_happiness
 }
 
-fn get_happiness(
-    a: &str,
-    b: &str,
-    interactions: &Vec<Interaction>,
-) -> i32 {
+fn get_happiness(a: &str, b: &str, interactions: &Vec<Interaction>) -> i32 {
     if a == "Me" || b == "Me" {
         return 0;
     }
@@ -105,9 +104,9 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
-        let cases = vec![
-            (r"Alice would gain 54 happiness units by sitting next to Bob.
+        let solver = Solver {};
+        let cases = vec![(
+            r"Alice would gain 54 happiness units by sitting next to Bob.
 Alice would lose 79 happiness units by sitting next to Carol.
 Alice would lose 2 happiness units by sitting next to David.
 Bob would gain 83 happiness units by sitting next to Alice.
@@ -118,8 +117,9 @@ Carol would gain 60 happiness units by sitting next to Bob.
 Carol would gain 55 happiness units by sitting next to David.
 David would gain 46 happiness units by sitting next to Alice.
 David would lose 7 happiness units by sitting next to Bob.
-David would gain 41 happiness units by sitting next to Carol.", 330)
-        ];
+David would gain 41 happiness units by sitting next to Carol.",
+            330,
+        )];
 
         for case in cases {
             assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
@@ -130,7 +130,7 @@ David would gain 41 happiness units by sitting next to Carol.", 330)
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_two(), 601);
     }
 }
