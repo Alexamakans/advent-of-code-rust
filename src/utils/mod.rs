@@ -2,6 +2,7 @@ pub mod combinatorials;
 pub mod conway;
 pub mod iterators;
 pub mod math;
+pub mod matrix;
 pub mod md5;
 pub mod parsing;
 
@@ -9,6 +10,7 @@ pub use combinatorials::*;
 pub use conway::*;
 pub use iterators::*;
 pub use math::*;
+pub use matrix::*;
 pub use md5::*;
 pub use parsing::*;
 
