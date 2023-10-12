@@ -9,7 +9,7 @@ pub fn caesar_cipher(s: &str, amount: usize) -> String {
     'next_letter: for c in s.chars() {
         let index = 'found: {
             for x in ALPHANUMERICS.iter().enumerate() {
-                if x.1 == &c {
+                if x.1 == &c.to_ascii_lowercase() {
                     break 'found x.0;
                 }
             }
