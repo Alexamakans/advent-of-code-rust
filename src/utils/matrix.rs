@@ -21,7 +21,7 @@ pub fn triangular_matrix_row_column_index_to_flat_index(row: usize, column: usiz
 /// Modified version of https://stackoverflow.com/a/9674523
 ///
 /// Returns (row, column) where row and column start at 1.
-pub fn traingular_matrix_flat_index_to_row_column_index(index: usize) -> (usize, usize) {
+pub fn triangular_matrix_flat_index_to_row_column_index(index: usize) -> (usize, usize) {
     let row = (-0.5 + ((0.25_f32 + 2_f32 * index as f32) as f32).sqrt()) as i32;
     let triangular_number = row * (row + 1) / 2;
     let column = index as i32 - triangular_number;
@@ -81,7 +81,7 @@ mod tests {
     #[test]
     fn test_back_and_forth_conversion() {
         for i in 0..10 {
-            let (row, column) = traingular_matrix_flat_index_to_row_column_index(i);
+            let (row, column) = triangular_matrix_flat_index_to_row_column_index(i);
             assert_eq!(
                 triangular_matrix_row_column_index_to_flat_index(row, column),
                 i

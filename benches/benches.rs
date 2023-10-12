@@ -1,7 +1,4 @@
-use aoclib::{
-    twothousandfifteen::{self, day25::grid_index_to_flat_index},
-    utils::{md5, DaySolver, PrimeIterator},
-};
+use aoclib::utils::*;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 fn specific_benches(c: &mut Criterion) {
@@ -35,7 +32,7 @@ fn specific_benches(c: &mut Criterion) {
 
     c.bench_function("grid_index_to_flat_index 2015-25 low row and column", |b| {
         b.iter(|| {
-            black_box(twothousandfifteen::day25::grid_index_to_flat_index(50, 50));
+            black_box(triangular_matrix_row_column_index_to_flat_index(50, 50));
         });
     });
 
@@ -43,9 +40,7 @@ fn specific_benches(c: &mut Criterion) {
         "grid_index_to_flat_index 2015-25 high row and column",
         |b| {
             b.iter(|| {
-                black_box(twothousandfifteen::day25::grid_index_to_flat_index(
-                    5000, 5000,
-                ));
+                black_box(triangular_matrix_row_column_index_to_flat_index(5000, 5000));
             });
         },
     );
@@ -56,7 +51,7 @@ fn specific_benches(c: &mut Criterion) {
             b.iter(|| {
                 for row in 1..=3_000 {
                     for column in 1..=3_000 {
-                        black_box(twothousandfifteen::day25::grid_index_to_flat_index(
+                        black_box(triangular_matrix_row_column_index_to_flat_index(
                             row, column,
                         ));
                     }
@@ -70,7 +65,7 @@ fn specific_benches(c: &mut Criterion) {
         |b| {
             b.iter(|| {
                 for index in 1..=9_000_000 {
-                    black_box(twothousandfifteen::day25::flat_index_to_grid_index(index));
+                    black_box(triangular_matrix_flat_index_to_row_column_index(index));
                 }
             });
         },
