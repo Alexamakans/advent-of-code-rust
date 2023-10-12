@@ -16,7 +16,11 @@ impl DaySolver<i32> for Solver {
     fn part_two_driver(&self, input: &str) -> i32 {
         for line in input.lines() {
             let room = Room::from(line);
-            if room.is_valid() && room.decrypted_name().starts_with("northpole-object-storage") {
+            if room.is_valid()
+                && room
+                    .decrypted_name()
+                    .starts_with("northpole-object-storage")
+            {
                 return room.sector_id;
             }
         }
@@ -82,7 +86,7 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         let cases = vec![("aaaaa-bbb-z-y-x-123[abxyz]", true)];
 
         for case in cases {
@@ -95,7 +99,7 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        let solver = Solver{};
+        let solver = Solver {};
         assert_eq!(solver.part_two(), 482);
     }
 }

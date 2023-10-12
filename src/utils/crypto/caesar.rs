@@ -31,6 +31,9 @@ mod tests {
     #[test]
     fn test_caesar_cipher_works() {
         let alphanumerics = "abcdefghijklmnopqrstuvwxyz";
-        assert_eq!(caesar_cipher(alphanumerics, 29), "defghijklmnopqrstuvwxyzabc");
+        assert_eq!(
+            caesar_cipher(alphanumerics, 29),
+            "defghijklmnopqrstuvwxyzabc"
+        );
     }
 }

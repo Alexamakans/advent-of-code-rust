@@ -1,17 +1,17 @@
 pub mod combinatorials;
 pub mod conway;
+pub mod crypto;
 pub mod iterators;
 pub mod math;
 pub mod matrix;
-pub mod crypto;
 pub mod parsing;
 
 pub use combinatorials::*;
 pub use conway::*;
+pub use crypto::*;
 pub use iterators::*;
 pub use math::*;
 pub use matrix::*;
-pub use crypto::*;
 pub use parsing::*;
 
 pub fn read_input(year: u16, day: u8) -> String {
