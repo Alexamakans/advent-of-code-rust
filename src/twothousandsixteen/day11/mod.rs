@@ -2,11 +2,11 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: &str) -> i32 {
+    fn part_one_driver(&self, _input: &str) -> i32 {
         todo!();
     }
 
-    fn part_two_driver(&self, input: &str) -> i32 {
+    fn part_two_driver(&self, _input: &str) -> i32 {
         todo!();
     }
 

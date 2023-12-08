@@ -3,11 +3,11 @@ use super::{super::utils::*, YEAR};
 
 pub struct Solver {}
 impl DaySolver<u64> for Solver {
-    fn part_one_driver(&self, input: &str) -> u64 {
+    fn part_one_driver(&self, _input: &str) -> u64 {
         solve((vec![59, 68, 82, 74], vec![543, 1020, 1664, 1022]))
     }
 
-    fn part_two_driver(&self, input: &str) -> u64 {
+    fn part_two_driver(&self, _input: &str) -> u64 {
         solve((vec![59688274], vec![543102016641022]))
     }
 

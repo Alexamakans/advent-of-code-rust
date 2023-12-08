@@ -35,7 +35,7 @@ fn check_composite(n: u64, a: u64, d: u64, s: i64) -> bool {
         return false;
     }
 
-    for r in 1..s {
+    for _r in 1..s {
         x = (x as u128 * x as u128 % n as u128) as u64;
         if x == n - 1 {
             return false;

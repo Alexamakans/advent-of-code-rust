@@ -20,7 +20,7 @@ impl DaySolver<u32> for Solver {
         prev_value as u32
     }
 
-    fn part_two_driver(&self, input: &str) -> u32 {
+    fn part_two_driver(&self, _input: &str) -> u32 {
         todo!();
     }
 
