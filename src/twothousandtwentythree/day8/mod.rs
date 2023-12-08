@@ -1,9 +1,10 @@
+use std::collections::HashSet;
+
 use super::{super::utils::*, YEAR};
 
-
 pub struct Solver {}
-impl DaySolver<i32> for Solver {
-    fn part_one_driver(&self, input: &str) -> i32 {
+impl DaySolver<u64> for Solver {
+    fn part_one_driver(&self, input: &str) -> u64 {
         let (steps, nodes) = parse_input(input);
         let mut current_node = nodes.iter().find(|e| e.value == "AAA").unwrap();
         let mut result = 0;
@@ -41,21 +42,24 @@ impl DaySolver<i32> for Solver {
         result
     }
 
-    fn part_two_driver(&self, input: &str) -> i32 {
+    fn part_two_driver(&self, input: &str) -> u64 {
         let (steps, nodes) = parse_input(input);
         let mut current_nodes = nodes
             .iter()
             .filter(|e| e.value.chars().last().unwrap() == 'A')
             .collect::<Vec<&Node>>();
+        println!("found {} start nodes", current_nodes.len());
         let mut cycles = vec![0; current_nodes.len()];
         let mut result = 0;
         loop {
             let mut index = 0;
             result += 1;
             for current_node in current_nodes.iter_mut() {
-                if cycles.get(index).unwrap() != &0 {
+                if *cycles.get(index).unwrap() != 0 {
+                    index += 1;
                     continue;
                 }
+
                 let step_index = (result - 1) as usize % steps.len();
                 match &steps[step_index] {
                     Step::Left => {
@@ -77,17 +81,19 @@ impl DaySolver<i32> for Solver {
                 }
 
                 if current_node.value.chars().last().unwrap() == 'Z' {
-                    *cycles.get_mut(index).unwrap() = result;
+                    *cycles.get_mut(index).unwrap() = result as u64;
+                    println!("{},", result);
                 }
                 index += 1;
             }
 
-            if cycles.iter().all(|e| e != &0) {
+            if cycles.iter().all(|e| *e != 0) {
+                println!();
                 break;
             }
         }
 
-        result
+        cycles.iter().fold(1, |a, b| lcm(a, *b))
     }
 
     fn read_input(&self) -> String {
@@ -95,26 +101,25 @@ impl DaySolver<i32> for Solver {
     }
 }
 
-fn lcm(a: i32, b: i32) -> i32 {
-    let mut x;
-    let mut y;
-    if a > b {
-        x = a;
-        y = b;
-    } else {
-        x = b;
-        y = a;
+fn gcd(mut a: u64, mut b: u64) -> u64 {
+    if a == b {
+        return a;
     }
-
-    let mut rem = x % y;
-
-    while rem != 0 {
-        x = y;
-        y = rem;
-        rem = x % y;
+    if b > a {
+        let temp = a;
+        a = b;
+        b = temp;
     }
+    while b > 0 {
+        let temp = a;
+        a = b;
+        b = temp % b;
+    }
+    return a;
+}
 
-    a * b / y
+fn lcm(a: u64, b: u64) -> u64 {
+    return a * (b / gcd(a, b));
 }
 
 struct Node {
