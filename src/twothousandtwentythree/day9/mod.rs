@@ -97,7 +97,6 @@ fn process_line_part_two(line: &str) -> i64 {
     }
 
     let first_value_in_last_row = *rows.iter().last().unwrap().first().unwrap();
-
     rows.iter_mut()
         .last()
         .unwrap()
