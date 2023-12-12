@@ -21,7 +21,7 @@ macro_rules! add_module_evaluate_input {
         $module_name::get_days()
             .get(($day - 1) as usize)
             .unwrap()
-            .evaluate_input($part, $input)
+            .evaluate_input($part, $input.trim())
     };
 }
 

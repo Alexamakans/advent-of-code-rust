@@ -25,10 +25,13 @@ pub fn read_input(year: u16, day: u8) -> String {
         year,
         day,
     );
-    std::fs::read_to_string(&path).expect(&format!(
-        "Expected file '{}' to exist, but it doesn't",
-        path
-    ))
+    std::fs::read_to_string(&path)
+        .expect(&format!(
+            "Expected file '{}' to exist, but it doesn't",
+            path
+        ))
+        .trim()
+        .to_string()
 }
 
 pub trait DaySolver<T> {

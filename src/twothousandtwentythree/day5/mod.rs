@@ -257,6 +257,6 @@ humidity-to-location map:
             assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         }
 
-        assert_eq!(solver.part_two(), 123);
+        assert_eq!(solver.part_two(), 56931769);
     }
 }

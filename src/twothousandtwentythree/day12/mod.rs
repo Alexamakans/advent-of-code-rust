@@ -15,6 +15,10 @@ impl DaySolver<i32> for Solver {
     }
 }
 
+struct Row {
+    states: Vec<bool>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -300,13 +300,13 @@ T55J5 684
 KK677 28
 KTJJT 220
 QQQJA 483",
-            253933213,
+            6440,
         )];
 
         for case in cases {
             assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         }
-        assert_eq!(solver.part_one(), 123);
+        assert_eq!(solver.part_one(), 253933213);
     }
 
     #[test]

@@ -109,7 +109,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11",
             assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         }
 
-        assert_eq!(solver.part_one(), 123);
+        assert_eq!(solver.part_one(), 18653);
     }
 
     #[test]
@@ -129,6 +129,6 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11",
             assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         }
 
-        assert_eq!(solver.part_two(), 123);
+        assert_eq!(solver.part_two(), 5921508);
     }
 }

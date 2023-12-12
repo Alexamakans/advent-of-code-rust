@@ -53,7 +53,7 @@ mod tests {
             assert_eq!(solve(case.0.clone()), case.1, "input = {:#?}", case.0);
         }
 
-        assert_eq!(solver.part_one(), 123);
+        assert_eq!(solver.part_one(), 275724);
     }
 
     #[test]
@@ -65,6 +65,6 @@ mod tests {
             assert_eq!(solve(case.0.clone()), case.1, "input = {:#?}", case.0);
         }
 
-        assert_eq!(solver.part_two(), 123);
+        assert_eq!(solver.part_two(), 37286485);
     }
 }

@@ -178,6 +178,6 @@ mod tests {
             assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         }
 
-        assert_eq!(solver.part_two(), 54728);
+        assert_eq!(solver.part_two(), 83707);
     }
 }
