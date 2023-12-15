@@ -247,25 +247,25 @@ mod tests {
 
     #[test]
     fn part_one_works() {
-        // let solver = Solver{};
+        let solver = Solver {};
         // let cases = vec![];
 
         // for case in cases {
         //     assert_eq!(solver.part_one_driver(case.0), case.1, "input = {}", case.0);
         // }
 
-        // assert_eq!(solver.part_one(), 123);
+        assert_eq!(solver.part_one(), 108840);
     }
 
     #[test]
     fn part_two_works() {
-        // let solver = Solver{};
+        let solver = Solver {};
         // let cases = vec![];
 
         // for case in cases {
         //     assert_eq!(solver.part_two_driver(case.0), case.1, "input = {}", case.0);
         // }
 
-        // assert_eq!(solver.part_two(), 123);
+        assert_eq!(solver.part_two(), 103445);
     }
 }
