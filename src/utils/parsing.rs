@@ -6,6 +6,79 @@ macro_rules! scanf {
     }}
 }
 
+#[macro_export]
+macro_rules! parse_world {
+    () => {};
+
+    (
+        $( $char:literal => $name:ident )*
+    ) => {
+        #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+        enum Tile {
+            $(
+                $name,
+            )*
+        }
+
+        impl From<char> for Tile {
+            fn from(c: char) -> Self {
+                match c {
+                    $(
+                        $char => Self::$name,
+                    )*
+                    _ => unreachable!(),
+                }
+            }
+        }
+
+        impl From<Tile> for char {
+            fn from(value: Tile) -> Self {
+                match value {
+                    $(
+                        Tile::$name => $char,
+                    )*
+                }
+            }
+        }
+
+        impl<'a> From<&'a Tile> for char {
+            fn from(value: &'a Tile) -> Self {
+                match value {
+                    $(
+                        Tile::$name => $char,
+                    )*
+                }
+            }
+        }
+
+        struct World {
+            tiles: Vec<Vec<Tile>>,
+        }
+
+        impl From<&str> for World {
+            fn from(value: &str) -> Self {
+                World {
+                    tiles: value
+                        .trim()
+                        .lines()
+                        .map(|line| line.trim().chars().map(Tile::from).collect())
+                        .collect(),
+                }
+            }
+        }
+
+        impl Display for World {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                for row in self.tiles.iter() {
+                    writeln!(f, "{}", row.iter().map(char::from).collect::<String>()).unwrap();
+                }
+
+                Ok(())
+            }
+        }
+    };
+}
+
 /// Given:
 /// ```
 /// "aaabba".chars()
