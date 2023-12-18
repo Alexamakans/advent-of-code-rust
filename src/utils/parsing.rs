@@ -13,7 +13,7 @@ macro_rules! parse_world {
     (
         $( $char:literal => $name:ident )*
     ) => {
-        #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+        #[derive(Clone, Copy, PartialEq, Eq, Debug, Hash)]
         enum Tile {
             $(
                 $name,
@@ -67,7 +67,7 @@ macro_rules! parse_world {
             }
         }
 
-        impl Display for World {
+        impl std::fmt::Display for World {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 for row in self.tiles.iter() {
                     writeln!(f, "{}", row.iter().map(char::from).collect::<String>()).unwrap();
